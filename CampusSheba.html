@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Portal - Campus Sheba</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        
+        body {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            background: #fff; 
+            padding: 2.5rem; 
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            width: 100%; 
+            max-width: 400px; 
+            text-align: center;
+        }
+
+        /* Logo inside the box styling */
+        .logo-box {
+            margin-bottom: 1.5rem;
+        }
+
+        .logo {
+            width: 300px; /* Sized to fit nicely inside the box */
+            height: auto;
+            /* If the image has a white background, this helps it blend into the white box */
+            mix-blend-mode: multiply; 
+        }
+
+        /* Hide screens by default */
+        .screen { display: none; }
+        .active { display: block; }
+
+        h2 { margin-bottom: 1rem; color: #1e3c72; font-size: 1.5rem; }
+        p { margin-bottom: 1.5rem; color: #666; }
+        
+        /* Buttons */
+        .choice-btn {
+            width: 100%; padding: 15px; margin: 10px 0;
+            border: 2px solid #1e3c72; border-radius: 8px;
+            background: transparent; color: #1e3c72;
+            font-size: 1.1rem; font-weight: bold; cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .choice-btn:hover { background: #1e3c72; color: white; }
+
+        .form-group { text-align: left; margin-bottom: 1rem; }
+        label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 0.9rem; }
+        input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+
+        .submit-btn {
+            width: 100%; padding: 12px; background: #2a5298;
+            color: white; border: none; border-radius: 5px;
+            font-weight: bold; cursor: pointer; margin-top: 10px;
+        }
+
+        .back-link {
+            display: block; margin-top: 15px; color: #777;
+            text-decoration: none; font-size: 0.8rem; cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="logo-box">
+            <img src="Logo 2.jpeg" alt="Campus Sheba Logo" class="logo">
+        </div>
+        
+        <div id="mainScreen" class="screen active">
+            <h2>Portal Entry</h2>
+            <p>Please select your role:</p>
+            <button class="choice-btn" onclick="showScreen('studentScreen')">Student</button>
+            <button class="choice-btn" onclick="showScreen('adminChoiceScreen')">Admin</button>
+        </div>
+
+        <div id="studentScreen" class="screen">
+            <h2>Student Login</h2>
+            <div class="form-group">
+                <label>Student Name</label>
+                <input type="text" id="stdName" placeholder="Enter Full Name">
+            </div>
+            <div class="form-group">
+                <label>Student ID</label>
+                <input type="text" id="stdID" placeholder="Enter ID (e.g. 230649)">
+            </div>
+            <button class="submit-btn" onclick="handleStudent()">Enter Dashboard</button>
+            <a class="back-link" onclick="showScreen('mainScreen')">← Back to Main</a>
+        </div>
+
+        <div id="adminChoiceScreen" class="screen">
+            <h2>Admin Area</h2>
+            <button class="choice-btn" onclick="showScreen('adminLoginScreen')">Login</button>
+            <button class="choice-btn" onclick="showScreen('adminCreateScreen')">Create Account</button>
+            <a class="back-link" onclick="showScreen('mainScreen')">← Back to Main</a>
+        </div>
+
+        <div id="adminLoginScreen" class="screen">
+            <h2>Admin Login</h2>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" placeholder="admin@college.edu">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" placeholder="••••••••">
+            </div>
+            <button class="submit-btn">Login</button>
+            <a class="back-link" onclick="showScreen('adminChoiceScreen')">← Back</a>
+        </div>
+
+        <div id="adminCreateScreen" class="screen">
+            <h2>New Admin</h2>
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" placeholder="Admin Name">
+            </div>
+            <div class="form-group">
+                <label>Admin Secret Key</label>
+                <input type="password" placeholder="Enter security key">
+            </div>
+            <button class="submit-btn">Register Admin</button>
+            <a class="back-link" onclick="showScreen('adminChoiceScreen')">← Back</a>
+        </div>
+
+    </div>
+
+    <script>
+        function showScreen(screenId) {
+            const screens = document.querySelectorAll('.screen');
+            screens.forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        function handleStudent() {
+            const name = document.getElementById('stdName').value;
+            const id = document.getElementById('stdID').value;
+            if(name && id) {
+                alert("Welcome Student: " + name + "\nID: " + id);
+            } else {
+                alert("Please fill in both fields.");
+            }
+        }
+    </script>
+
+</body>
+</html>
