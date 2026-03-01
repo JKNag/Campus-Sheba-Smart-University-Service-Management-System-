@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Campus Sheba</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f0f2f5;
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 30px 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            text-align: center;
+            padding: 0 20px 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .sidebar-logo {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+        }
+
+        .sidebar-logo img {
+            width: 60px;
+            height: auto;
+            mix-blend-mode: multiply;
+        }
+
+        .sidebar h2 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .sidebar p {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .sidebar-nav {
+            padding: 30px 0;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            padding: 15px 30px;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: 0.3s;
+            gap: 15px;
+        }
+
+        .sidebar-nav a:hover,
+        .sidebar-nav a.active {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border-left: 4px solid white;
+        }
+
+        .sidebar-nav a i {
+            width: 20px;
+            font-size: 18px;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 30px;
+        }
+
+        .top-bar {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .page-title h1 {
+            font-size: 24px;
+            color: #1e3c72;
+        }
+
+        .page-title p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .notifications {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .notifications i {
+            font-size: 20px;
+            color: #666;
+        }
+
+        .badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #dc3545;
+            color: white;
+            font-size: 10px;
+            padding: 3px 5px;
+            border-radius: 50%;
+        }
+
+        .admin-avatar {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .stat-header h3 {
+            font-size: 14px;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #1e3c7215, #2a529815);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-icon i {
+            font-size: 18px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1e3c72;
+            margin-bottom: 5px;
+        }
+
+        .stat-change {
+            font-size: 12px;
+            color: #28a745;
+        }
+
+        .stat-change.negative {
+            color: #dc3545;
+        }
+
+        /* Charts Row */
+        .charts-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .chart-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .chart-header h3 {
+            font-size: 18px;
+            color: #1e3c72;
+        }
+
+        .chart-header select {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        canvas {
+            max-height: 300px;
+        }
+
+        /* Recent Requests */
+        .recent-requests {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-header h2 {
+            font-size: 20px;
+            color: #1e3c72;
+        }
+
+        .filter-options {
+            display: flex;
+            gap: 10px;
+        }
+
+        .filter-btn {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: #1e3c72;
+            color: white;
+            border-color: #1e3c72;
+        }
+
+        .requests-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .requests-table th {
+            text-align: left;
+            padding: 15px 10px;
+            color: #666;
+            font-weight: 500;
+            font-size: 14px;
+            border-bottom: 2px solid #f0f2f5;
+        }
+
+        .requests-table td {
+            padding: 15px 10px;
+            border-bottom: 1px solid #f0f2f5;
+        }
+
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-progress {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .status-resolved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .priority-badge {
+            padding: 3px 10px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .priority-high {
+            background: #dc354520;
+            color: #dc3545;
+        }
+
+        .priority-medium {
+            background: #fd7e1420;
+            color: #fd7e14;
+        }
+
+        .priority-low {
+            background: #28a74520;
+            color: #28a745;
+        }
+
+        .action-btn {
+            padding: 5px 15px;
+            background: #1e3c72;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        /* Performance Cards */
+        .performance-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .performance-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .performance-card h3 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .dept-list {
+            margin-top: 15px;
+        }
+
+        .dept-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f2f5;
+        }
+
+        .dept-name {
+            font-weight: 500;
+        }
+
+        .dept-stats {
+            display: flex;
+            gap: 20px;
+            font-size: 13px;
+        }
+
+        .resolved-count {
+            color: #28a745;
+        }
+
+        .pending-count {
+            color: #dc3545;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .charts-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .performance-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 80px;
+            }
+            
+            .sidebar-header p,
+            .sidebar-nav a span {
+                display: none;
+            }
+            
+            .sidebar-nav a {
+                padding: 15px;
+                justify-content: center;
+            }
+            
+            .main-content {
+                margin-left: 80px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .top-bar {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .filter-options {
+                flex-wrap: wrap;
+            }
+            
+            .requests-table {
+                font-size: 12px;
+            }
+            
+            .requests-table th:nth-child(3),
+            .requests-table td:nth-child(3),
+            .requests-table th:nth-child(5),
+            .requests-table td:nth-child(5) {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <img src="../images/logo.png" alt="Logo">
+                </div>
+                <h2>Dr. Admin</h2>
+                <p>Super Administrator</p>
+            </div>
+            
+            <div class="sidebar-nav">
+                <a href="#" class="active">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#">
+                    <i class="fas fa-tasks"></i>
+                    <span>All Requests</span>
+                </a>
+                <a href="#">
+                    <i class="fas fa-users"></i>
+                    <span>Manage Users</span>
+                </a>
+                <a href="#">
+                    <i class="fas fa-building"></i>
+                    <span>Departments</span>
+                </a>
+                <a href="#">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Analytics</span>
+                </a>
+                <a href="#">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="#">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>Activity Logs</span>
+                </a>
+                <a href="../index.html">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="top-bar">
+                <div class="page-title">
+                    <h1>Admin Dashboard</h1>
+                    <p>Welcome back, Dr. Admin. Here's what's happening today.</p>
+                </div>
+                
+                <div class="admin-info">
+                    <div class="notifications">
+                        <i class="far fa-bell"></i>
+                        <span class="badge">5</span>
+                    </div>
+                    <div class="admin-avatar">AD</div>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <h3>Total Requests</h3>
+                        <div class="stat-icon">
+                            <i class="fas fa-ticket-alt"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value">1,234</div>
+                    <span class="stat-change"><i class="fas fa-arrow-up"></i> 12% from last month</span>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <h3>Pending</h3>
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value">89</div>
+                    <span class="stat-change"><i class="fas fa-arrow-down"></i> 5% from yesterday</span>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <h3>In Progress</h3>
+                        <div class="stat-icon">
+                            <i class="fas fa-sync-alt"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value">156</div>
+                    <span class="stat-change">42% of total</span>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <h3>Resolved Today</h3>
+                        <div class="stat-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value">45</div>
+                    <span class="stat-change"><i class="fas fa-arrow-up"></i> 8% increase</span>
+                </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="charts-row">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Request Trends</h3>
+                        <select>
+                            <option>Last 7 days</option>
+                            <option>Last 30 days</option>
+                            <option>Last 3 months</option>
+                        </select>
+                    </div>
+                    <canvas id="trendsChart"></canvas>
+                </div>
+                
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>By Category</h3>
+                    </div>
+                    <canvas id="categoryChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Recent Requests -->
+            <div class="recent-requests">
+                <div class="section-header">
+                    <h2>Recent Service Requests</h2>
+                    <div class="filter-options">
+                        <button class="filter-btn active">All</button>
+                        <button class="filter-btn">Pending</button>
+                        <button class="filter-btn">In Progress</button>
+                        <button class="filter-btn">High Priority</button>
+                    </div>
+                </div>
+                
+                <table class="requests-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Student</th>
+                            <th>Category</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Priority</th>
+                            <th>Assigned To</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#REQ2401</td>
+                            <td>Rahul Sharma</td>
+                            <td>IT Services</td>
+                            <td>Lab computer not working</td>
+                            <td><span class="status-badge status-progress">In Progress</span></td>
+                            <td><span class="priority-badge priority-high">High</span></td>
+                            <td>John (IT Staff)</td>
+                            <td>2024-03-15</td>
+                            <td><button class="action-btn">Assign</button></td>
+                        </tr>
+                        <tr>
+                            <td>#REQ2402</td>
+                            <td>Priya Singh</td>
+                            <td>Hostel</td>
+                            <td>AC not cooling</td>
+                            <td><span class="status-badge status-pending">Pending</span></td>
+                            <td><span class="priority-badge priority-medium">Medium</span></td>
+                            <td>-</td>
+                            <td>2024-03-14</td>
+                            <td><button class="action-btn">Assign</button></td>
+                        </tr>
+                        <tr>
+                            <td>#REQ2403</td>
+                            <td>Amit Kumar</td>
+                            <td>Transport</td>
+                            <td>Bus route change request</td>
+                            <td><span class="status-badge status-resolved">Resolved</span></td>
+                            <td><span class="priority-badge priority-low">Low</span></td>
+                            <td>Mike (Transport)</td>
+                            <td>2024-03-12</td>
+                            <td><button class="action-btn">View</button></td>
+                        </tr>
+                        <tr>
+                            <td>#REQ2404</td>
+                            <td>Sneha Patel</td>
+                            <td>Administration</td>
+                            <td>Transcript request</td>
+                            <td><span class="status-badge status-progress">In Progress</span></td>
+                            <td><span class="priority-badge priority-high">High</span></td>
+                            <td>Sarah (Admin)</td>
+                            <td>2024-03-10</td>
+                            <td><button class="action-btn">Reassign</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Performance Monitoring -->
+            <div class="performance-grid">
+                <div class="performance-card">
+                    <h3>Department Performance</h3>
+                    <div class="dept-list">
+                        <div class="dept-item">
+                            <span class="dept-name">IT Services</span>
+                            <div class="dept-stats">
+                                <span class="resolved-count">45 resolved</span>
+                                <span class="pending-count">3 pending</span>
+                            </div>
+                        </div>
+                        <div class="dept-item">
+                            <span class="dept-name">Hostel</span>
+                            <div class="dept-stats">
+                                <span class="resolved-count">32 resolved</span>
+                                <span class="pending-count">8 pending</span>
+                            </div>
+                        </div>
+                        <div class="dept-item">
+                            <span class="dept-name">Transport</span>
+                            <div class="dept-stats">
+                                <span class="resolved-count">28 resolved</span>
+                                <span class="pending-count">2 pending</span>
+                            </div>
+                        </div>
+                        <div class="dept-item">
+                            <span class="dept-name">Administration</span>
+                            <div class="dept-stats">
+                                <span class="resolved-count">51 resolved</span>
+                                <span class="pending-count">5 pending</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="performance-card">
+                    <h3>Staff Workload</h3>
+                    <div class="dept-list">
+                        <div class="dept-item">
+                            <span class="dept-name">John (IT)</span>
+                            <div class="dept-stats">
+                                <span class="resolved-count">12 assigned</span>
+                                <span class="pending-count">4 pending</span>
+                            </div>
+                        </div>
+                        <div class="dept-item">
+                            <span class="dept-name">Sarah (Admin)</span>
+                            <div class="dept-stats">
+                                <span class="resolved-count">15 assigned</span>
+                                <span class="pending-count">2 pending</span>
+                            </div>
+                        </div>
+                        <div class="dept-item">
+                            <span class="dept-name">Mike (Transport)</span>
+                            <div class="dept-stats">
+                                <span class="resolved-count">8 assigned</span>
+                                <span class="pending-count">1 pending</span>
+                            </div>
+                        </div>
+                        <div class="dept-item">
+                            <span class="dept-name">David (Hostel)</span>
+                            <div class="dept-stats">
+                                <span class="resolved-count">10 assigned</span>
+                                <span class="pending-count">3 pending</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="performance-card">
+                    <h3>Average Resolution Time</h3>
+                    <div class="dept-list">
+                        <div class="dept-item">
+                            <span class="dept-name">IT Services</span>
+                            <span class="resolved-count">4.2 hrs</span>
+                        </div>
+                        <div class="dept-item">
+                            <span class="dept-name">Hostel</span>
+                            <span class="resolved-count">6.5 hrs</span>
+                        </div>
+                        <div class="dept-item">
+                            <span class="dept-name">Transport</span>
+                            <span class="resolved-count">3.1 hrs</span>
+                        </div>
+                        <div class="dept-item">
+                            <span class="dept-name">Administration</span>
+                            <span class="resolved-count">24 hrs</span>
+                        </div>
+                        <div class="dept-item">
+                            <span class="dept-name">Overall</span>
+                            <span class="resolved-count">8.2 hrs</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Trends Chart
+        const ctx1 = document.getElementById('trendsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Service Requests',
+                    data: [65, 59, 80, 81, 56, 55, 40],
+                    borderColor: '#1e3c72',
+                    backgroundColor: 'rgba(30, 60, 114, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+        // Category Chart
+        const ctx2 = document.getElementById('categoryChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'doughnut',
+            data: {
+                labels: ['IT', 'Hostel', 'Transport', 'Admin', 'Other'],
+                datasets: [{
+                    data: [45, 25, 15, 10, 5],
+                    backgroundColor: ['#1e3c72', '#2a5298', '#4a6fa5', '#6b8cbe', '#8aa9d6']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Tracking - Campus Sheba</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f0f2f5;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            height: 40px;
+            width: auto;
+        }
+
+        .logo-area h1 {
+            font-size: 20px;
+            color: #1e3c72;
+        }
+
+        .back-btn {
+            padding: 10px 20px;
+            background: #f0f2f5;
+            color: #1e3c72;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #1e3c72;
+            color: white;
+        }
+
+        /* Request Details */
+        .request-details {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+
+        .request-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f2f5;
+        }
+
+        .request-id {
+            font-size: 24px;
+            color: #1e3c72;
+        }
+
+        .status-badge {
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .status-progress {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .info-item {
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 10px;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1e3c72;
+        }
+
+        .priority-high {
+            color: #dc3545;
+        }
+
+        .priority-medium {
+            color: #fd7e14;
+        }
+
+        .priority-low {
+            color: #28a745;
+        }
+
+        /* Timeline */
+        .timeline {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+
+        .timeline h2 {
+            color: #1e3c72;
+            margin-bottom: 30px;
+        }
+
+        .timeline-container {
+            position: relative;
+            padding-left: 50px;
+        }
+
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #e0e0e0;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -38px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid;
+            z-index: 1;
+        }
+
+        .timeline-item.completed .timeline-dot {
+            border-color: #28a745;
+            background: #28a745;
+        }
+
+        .timeline-item.current .timeline-dot {
+            border-color: #1e3c72;
+            background: white;
+            animation: pulse 2s infinite;
+        }
+
+        .timeline-item.pending .timeline-dot {
+            border-color: #ffc107;
+            background: white;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(30, 60, 114, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(30, 60, 114, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(30, 60, 114, 0);
+            }
+        }
+
+        .timeline-content {
+            background: #f8fafc;
+            padding: 15px 20px;
+            border-radius: 10px;
+        }
+
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .timeline-title {
+            font-weight: 600;
+            color: #1e3c72;
+        }
+
+        .timeline-date {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .timeline-description {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Comments Section */
+        .comments-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .comments-section h2 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+        }
+
+        .comment-form {
+            margin-bottom: 30px;
+        }
+
+        .comment-form textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            resize: vertical;
+            font-family: inherit;
+            margin-bottom: 10px;
+        }
+
+        .comment-form button {
+            padding: 12px 30px;
+            background: #1e3c72;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .comment-form button:hover {
+            background: #2a5298;
+        }
+
+        .comment {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 10px;
+        }
+
+        .comment-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .comment-content {
+            flex: 1;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .comment-author {
+            font-weight: 600;
+            color: #1e3c72;
+        }
+
+        .comment-date {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .comment-text {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .request-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline-container {
+                padding-left: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo-area">
+                <img src="../images/logo.png" alt="Campus Sheba" class="logo">
+                <h1>Request Tracking</h1>
+            </div>
+            <a href="student-dashboard.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+        </div>
+
+        <!-- Request Details -->
+        <div class="request-details">
+            <div class="request-header">
+                <h1 class="request-id">Request #REQ2401</h1>
+                <span class="status-badge status-progress">In Progress</span>
+            </div>
+            
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">Category</div>
+                    <div class="info-value">IT Services</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Priority</div>
+                    <div class="info-value priority-high">High</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Submitted On</div>
+                    <div class="info-value">March 15, 2024 - 10:30 AM</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Assigned To</div>
+                    <div class="info-value">John Smith (IT Staff)</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Deadline</div>
+                    <div class="info-value">March 16, 2024</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Department</div>
+                    <div class="info-value">Information Technology</div>
+                </div>
+            </div>
+            
+            <div class="description">
+                <h3>Description</h3>
+                <p>The computer in Lab 3, System #12 is not booting up. It shows a black screen with error message. This is affecting student lab work.</p>
+            </div>
+        </div>
+
+        <!-- Timeline -->
+        <div class="timeline">
+            <h2>Request Timeline</h2>
+            <div class="timeline-container">
+                <div class="timeline-item completed">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <span class="timeline-title">Request Submitted</span>
+                            <span class="timeline-date">Mar 15, 10:30 AM</span>
+                        </div>
+                        <div class="timeline-description">
+                            Request created by Rahul Sharma
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item completed">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <span class="timeline-title">Request Assigned</span>
+                            <span class="timeline-date">Mar 15, 11:15 AM</span>
+                        </div>
+                        <div class="timeline-description">
+                            Assigned to John Smith (IT Staff) by Admin
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item current">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <span class="timeline-title">In Progress</span>
+                            <span class="timeline-date">Mar 15, 02:30 PM</span>
+                        </div>
+                        <div class="timeline-description">
+                            Staff has started working on the request. Currently diagnosing the issue.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item pending">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <span class="timeline-title">Resolved (Pending)</span>
+                            <span class="timeline-date">Expected: Mar 16</span>
+                        </div>
+                        <div class="timeline-description">
+                            Request will be marked as resolved after completion
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item pending">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <span class="timeline-title">Closed (Pending)</span>
+                            <span class="timeline-date">After your feedback</span>
+                        </div>
+                        <div class="timeline-description">
+                            Request will be closed after your confirmation and feedback
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comments Section -->
+        <div class="comments-section">
+            <h2>Comments & Updates</h2>
+            
+            <div class="comment-form">
+                <textarea rows="3" placeholder="Add a comment or ask a question..."></textarea>
+                <button>Post Comment</button>
+            </div>
+            
+            <div class="comment">
+                <div class="comment-avatar">JS</div>
+                <div class="comment-content">
+                    <div class="comment-header">
+                        <span class="comment-author">John Smith (IT Staff)</span>
+                        <span class="comment-date">Mar 15, 02:30 PM</span>
+                    </div>
+                    <div class="comment-text">
+                        I've checked the system. It appears to be a hardware issue with the RAM. I'm replacing it now. Should be resolved in an hour.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="comment">
+                <div class="comment-avatar">AD</div>
+                <div class="comment-content">
+                    <div class="comment-header">
+                        <span class="comment-author">Admin</span>
+                        <span class="comment-date">Mar 15, 11:15 AM</span>
+                    </div>
+                    <div class="comment-text">
+                        Request has been assigned to IT staff. They will look into it shortly.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="comment">
+                <div class="comment-avatar">RS</div>
+                <div class="comment-content">
+                    <div class="comment-header">
+                        <span class="comment-author">Rahul Sharma</span>
+                        <span class="comment-date">Mar 15, 10:30 AM</span>
+                    </div>
+                    <div class="comment-text">
+                        The computer in Lab 3, System #12 is not working. Please help!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

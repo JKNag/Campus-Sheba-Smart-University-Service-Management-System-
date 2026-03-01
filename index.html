@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Sheba - Smart University Service Management</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo-container">
+                <img src="images/logo.jpeg" alt="Campus Sheba" class="logo">
+                <div class="logo-text">
+                    <h1>Campus Sheba</h1>
+                    <p>Smart University Service Management</p>
+                </div>
+            </div>
+            
+            <div class="nav-links">
+                <a href="#home" class="active">Home</a>
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#dashboard">Dashboard</a>
+                <a href="#contact">Contact</a>
+                <a href="login.php" class="login-btn"><i class="fas fa-user"></i> Login</a>
+            </div>
+            
+            <div class="mobile-menu" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation -->
+        <div class="mobile-nav" id="mobileNav">
+            <a href="#home" onclick="toggleMobileMenu()">Home</a>
+            <a href="#features" onclick="toggleMobileMenu()">Features</a>
+            <a href="#how-it-works" onclick="toggleMobileMenu()">How It Works</a>
+            <a href="#dashboard" onclick="toggleMobileMenu()">Dashboard</a>
+            <a href="#contact" onclick="toggleMobileMenu()">Contact</a>
+            <a href="login.php" class="login-btn" onclick="toggleMobileMenu()"><i class="fas fa-user"></i> Login</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1 data-aos="fade-up">
+                Welcome to Campus Sheba
+                <span>Your Smart University Service Hub</span>
+            </h1>
+            <p data-aos="fade-up" data-aos-delay="100">
+                Streamline university services with our comprehensive management system. 
+                Submit requests, track progress, and get instant updates - all in one place.
+            </p>
+            <div class="hero-buttons" data-aos="fade-up" data-aos-delay="200">
+                <a href="register.php" class="btn btn-primary">Get Started</a>
+                <a href="#features" class="btn btn-outline">Explore Features</a>
+            </div>
+            <div class="hero-stats" data-aos="fade-up" data-aos-delay="300">
+                <div class="stat-item">
+                    <span class="stat-number">5000+</span>
+                    <span class="stat-label">Active Users</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">10k+</span>
+                    <span class="stat-label">Requests Solved</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">24/7</span>
+                    <span class="stat-label">Support</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-header" data-aos="fade-up">
+            <p class="section-subtitle">Our Features</p>
+            <h2 class="section-title">Everything You Need in <span>One Platform</span></h2>
+            <p>Discover how Campus Sheba revolutionizes university service management</p>
+        </div>
+        
+        <div class="features-grid">
+            <!-- Feature 1 -->
+            <div class="feature-card" data-aos="fade-up">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>1️⃣ Secure Authentication</h3>
+                <p>Role-based access control with different dashboards for Students, Staff, Department Admin, and Super Admin.</p>
+                <span class="feature-tag">Security First</span>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-icon">
+                    <i class="fas fa-ticket-alt"></i>
+                </div>
+                <h3>2️⃣ Smart Request Submission</h3>
+                <p>Digital requests with category selection (IT, Lab, Hostel, Transport, Admin), file attachments, and auto ID generation.</p>
+                <span class="feature-tag">Paperless</span>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-icon">
+                    <i class="fas fa-project-diagram"></i>
+                </div>
+                <h3>3️⃣ Request Lifecycle</h3>
+                <p>Structured workflow: Submitted → Assigned → In Progress → Resolved → Closed with complete history.</p>
+                <span class="feature-tag">Trackable</span>
+            </div>
+
+            <!-- Feature 4 -->
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-icon">
+                    <i class="fas fa-tasks"></i>
+                </div>
+                <h3>4️⃣ Priority Management</h3>
+                <p>Smart task assignment with Low/Medium/High priority levels and deadline/SLA tracking.</p>
+                <span class="feature-tag">Efficient</span>
+            </div>
+
+            <!-- Feature 5 -->
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="feature-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <h3>5️⃣ Real-time Tracking</h3>
+                <p>Track request status anytime with timeline-based updates and assigned department visibility.</p>
+                <span class="feature-tag">Transparent</span>
+            </div>
+
+            <!-- Feature 6 -->
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
+                <div class="feature-icon">
+                    <i class="fas fa-bell"></i>
+                </div>
+                <h3>6️⃣ Smart Notifications</h3>
+                <p>Instant alerts for submission, assignment, updates, and resolution via email and in-system.</p>
+                <span class="feature-tag">Real-time</span>
+            </div>
+
+            <!-- Feature 7 -->
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="600">
+                <div class="feature-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <h3>7️⃣ Feedback & Rating</h3>
+                <p>Rate completed services and provide feedback to help improve service quality.</p>
+                <span class="feature-tag">Quality</span>
+            </div>
+
+            <!-- Feature 8 -->
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="700">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>8️⃣ Performance Analytics</h3>
+                <p>Track staff workload, resolution times, and department efficiency metrics.</p>
+                <span class="feature-tag">Data-driven</span>
+            </div>
+
+            <!-- Feature 9 -->
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="800">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-bar"></i>
+                </div>
+                <h3>9️⃣ Advanced Reporting</h3>
+                <p>Department-wise reports, trend analysis, and downloadable statistics for decision making.</p>
+                <span class="feature-tag">Insights</span>
+            </div>
+
+            <!-- Feature 10 -->
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="900">
+                <div class="feature-icon">
+                    <i class="fas fa-cog"></i>
+                </div>
+                <h3>🔟 System Administration</h3>
+                <p>Complete user, department, and service category management with activity logs.</p>
+                <span class="feature-tag">Control</span>
+            </div>
+
+            <!-- Feature 11 -->
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="1000">
+                <div class="feature-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h3>1️⃣1️⃣ Secure Data</h3>
+                <p>Encrypted credentials, validation, and comprehensive audit trails for data safety.</p>
+                <span class="feature-tag">Protected</span>
+            </div>
+
+            <!-- Feature 12 -->
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="1100">
+                <div class="feature-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3>1️⃣2️⃣ Intuitive UI</h3>
+                <p>Simple, clean interface with easy navigation and mobile-responsive design.</p>
+                <span class="feature-tag">User-friendly</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="section-header" data-aos="fade-up">
+            <p class="section-subtitle">Simple Process</p>
+            <h2 class="section-title">How <span>Campus Sheba</span> Works</h2>
+            <p>Get your issues resolved in four easy steps</p>
+        </div>
+        
+        <div class="steps-container">
+            <div class="step" data-aos="fade-right">
+                <div class="step-number">1</div>
+                <h3>Submit Request</h3>
+                <p>Login and submit your service request with category and description</p>
+            </div>
+            
+            <div class="step" data-aos="fade-up">
+                <div class="step-number">2</div>
+                <h3>Get Assigned</h3>
+                <p>Admin assigns your request to the appropriate staff member</p>
+            </div>
+            
+            <div class="step" data-aos="fade-up" data-aos-delay="100">
+                <div class="step-number">3</div>
+                <h3>Track Progress</h3>
+                <p>Monitor real-time updates as your request is processed</p>
+            </div>
+            
+            <div class="step" data-aos="fade-left">
+                <div class="step-number">4</div>
+                <h3>Rate Service</h3>
+                <p>Provide feedback after resolution to help us improve</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Preview -->
+    <section class="dashboard-preview" id="dashboard">
+        <div class="preview-container">
+            <div class="preview-content" data-aos="fade-right">
+                <h2>Powerful Dashboards for Every Role</h2>
+                <p>Each user type gets a tailored dashboard with relevant features and information</p>
+                
+                <div class="preview-stats">
+                    <div class="preview-stat">
+                        <span class="number">Student</span>
+                        <span>Submit & Track</span>
+                    </div>
+                    <div class="preview-stat">
+                        <span class="number">Staff</span>
+                        <span>Manage Tasks</span>
+                    </div>
+                    <div class="preview-stat">
+                        <span class="number">Admin</span>
+                        <span>Oversee All</span>
+                    </div>
+                    <div class="preview-stat">
+                        <span class="number">Super Admin</span>
+                        <span>Full Control</span>
+                    </div>
+                </div>
+                <div class="dashboard-links">
+                    <a href="pages/student-dashboard.html" class="btn btn-outline">View Student Dashboard</a>
+                    <a href="pages/admin-dashboard.html" class="btn btn-outline">View Admin Dashboard</a>
+                </div>
+            </div>
+            
+            <div class="preview-image" data-aos="fade-left">
+                <img src="images/dashboard-preview.png" alt="Dashboard Preview">
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="section-header" data-aos="fade-up">
+            <p class="section-subtitle">Testimonials</p>
+            <h2 class="section-title">What <span>Users</span> Say</h2>
+            <p>Hear from our campus community</p>
+        </div>
+        
+        <div class="testimonials-slider">
+            <div class="testimonial-card" data-aos="fade-right">
+                <div class="testimonial-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text">"Campus Sheba has made reporting issues so easy. I can track my complaints in real-time!"</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">R</div>
+                    <div class="author-info">
+                        <h4>Rahul Sharma</h4>
+                        <p>Student, CSE 4th Year</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card" data-aos="fade-up">
+                <div class="testimonial-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text">"As an admin, managing requests has never been easier. The analytics help us improve efficiency."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">P</div>
+                    <div class="author-info">
+                        <h4>Dr. Priya Patel</h4>
+                        <p>Department Head</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card" data-aos="fade-left">
+                <div class="testimonial-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text">"The notification system keeps everyone informed. Great tool for campus management!"</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">A</div>
+                    <div class="author-info">
+                        <h4>Ahmed Khan</h4>
+                        <p>IT Staff</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="cta-content" data-aos="zoom-in">
+            <h2>Ready to Transform Your Campus Services?</h2>
+            <p>Join thousands of users who are already experiencing smarter service management with Campus Sheba</p>
+            <div class="cta-buttons">
+                <a href="register.php" class="btn btn-primary">Get Started Now</a>
+                <a href="login.php" class="btn btn-outline">Login to Dashboard</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="footer-content">
+            <div class="footer-about">
+                <img src="images/logo.png" alt="Campus Sheba" class="logo">
+                <p>Smart University Service Management System streamlining campus services for students, staff, and administrators.</p>
+            </div>
+            
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#dashboard">Dashboard</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links">
+                <h3>Features</h3>
+                <ul>
+                    <li><a href="#">Service Requests</a></li>
+                    <li><a href="#">Request Tracking</a></li>
+                    <li><a href="#">Analytics</a></li>
+                    <li><a href="#">Notifications</a></li>
+                    <li><a href="#">Feedback System</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-newsletter">
+                <h3>Stay Updated</h3>
+                <p>Subscribe to our newsletter</p>
+                <input type="email" placeholder="Enter your email">
+                <button>Subscribe</button>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 Campus Sheba. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
