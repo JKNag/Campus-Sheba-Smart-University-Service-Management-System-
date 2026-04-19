@@ -5,7 +5,7 @@ require_once __DIR__ . '/notifications.php';
 
 function createRequest($userId, $catId, $title, $desc, $priority='medium', $loc='', $bld='', $room='') {
     global $pdo;
-
+//updated
     // catId is null for "Others / General Inquiry"
     $catIdVal = ($catId && $catId > 0) ? (int)$catId : null;
 
