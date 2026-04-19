@@ -1,5 +1,6 @@
 <?php
 // includes/notifications.php
+// fixed 
 require_once __DIR__ . '/../config/database.php';
 
 function createNotification($userId, $type, $title, $message, $requestId = null, $link = null) {
