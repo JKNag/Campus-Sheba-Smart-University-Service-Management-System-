@@ -1,7 +1,7 @@
 <?php
 // includes/sidebar.php
 // Usage: include with $activePage set to current page name
-// e.g. $activePage = 'dashboard';
+// dashboard new
 $role     = getUserRole();
 $userName = getUserName();
 $unread   = function_exists('getUnreadCount') ? getUnreadCount(getUserId()) : 0;
