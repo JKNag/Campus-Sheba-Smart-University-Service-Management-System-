@@ -1,5 +1,6 @@
 <?php
 // includes/auth.php
+//fixed
 require_once __DIR__ . '/../config/database.php';
 
 function loginUser($email, $password) {
